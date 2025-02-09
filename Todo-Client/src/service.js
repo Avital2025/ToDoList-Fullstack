@@ -1,20 +1,29 @@
 import axios from 'axios';
 
-const apiUrl =  process.env.REACT_APP_API_URL;;
-axios.defaults.baseURL = apiUrl;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
+// הוספת Interceptor לתפיסת שגיאות ורישום ללוג
 axios.interceptors.response.use(
-  response => response,
+  response => response, // מחזיר את התגובה כרגיל אם אין שגיאה
   error => {
-    console.error('API Error:', error.response ? error.response.data : error.message);
-    return Promise.reject(error);
+    console.error('API Error:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data
+    });
+    return Promise.reject(error); 
   }
 );
 
 export default {
   getTasks: async () => {
     const result = await axios.get('/tasks');
-    return result.data;
+    if (Array.isArray(result.data))
+    return result.data
+    else {
+      alert("no tasks");
+      return [];
+    }
   },
 
   addTask: async (name) => {
@@ -22,6 +31,7 @@ export default {
     const result = await axios.post('/tasks', { Name:name , isComplete:false });
     return result.data;
   },
+
   setCompleted: async (id, isComplete) => {
     console.log('setCompleted', { id, isComplete });
     const result = await axios.put(`/tasks/${id}`, { isComplete: isComplete} );
@@ -34,9 +44,3 @@ export default {
     return result.data;
   }
 };
-
-
-
-
-
-
