@@ -19,15 +19,19 @@ export default {
 
   addTask: async (name) => {
     console.log('addTask', name);
-    await axios.post('/tasks', { name: name, isComplete: false });
-
+    const result = await axios.post('/tasks', { Name:name , isComplete:false });
+    return result.data;
   },
-  setCompleted: async (id, isComplete,name) => {
-    await axios.put(`/tasks/${id}`, {name:name,isComplete: isComplete });
+  setCompleted: async (id, isComplete) => {
+    console.log('setCompleted', { id, isComplete });
+    const result = await axios.put(`/tasks/${id}`, { isComplete: isComplete} );
+    return result.data;
   },
 
   deleteTask: async (id) => {
-    await axios.delete(`/tasks/${id}`);
+    console.log('deleteTask');
+    const result = await axios.delete(`/tasks/${id}`);
+    return result.data;
   }
 };
 

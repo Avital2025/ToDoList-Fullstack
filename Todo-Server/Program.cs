@@ -8,11 +8,15 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql("server=bwpbbxhfh4192jvihzjw-mysql.services.clever-cloud.com;user=ueianhuugtuyo7vo;password=8aJUzM9RCSvNFF8BYoQR;database=bwpbbxhfh4192jvihzjw",
+    options.UseMySql(builder.Configuration.GetConnectionString("bwpbbxhfh4192jvihzjw"),
+   // options.UseMySql("server=bwpbbxhfh4192jvihzjw-mysql.services.clever-cloud.com;user=ueianhuugtuyo7vo;password=8aJUzM9RCSvNFF8BYoQR;database=bwpbbxhfh4192jvihzjw",
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql")));
 
 
+
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
