@@ -21,7 +21,6 @@ export default {
     if (Array.isArray(result.data))
     return result.data
     else {
-      alert("no tasks");
       return [];
     }
   },
